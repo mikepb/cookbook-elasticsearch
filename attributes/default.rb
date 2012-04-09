@@ -40,3 +40,8 @@ default.elasticsearch[:index_replicas] = "1"
 # === PERSISTENCE ===
 #
 default.elasticsearch[:gateway][:type] = nil
+
+# === Engine Yard ===
+# Engine Yard support.
+#
+default.elasticsearch[:cluster_name]   ||= node.engineyard.environment.name

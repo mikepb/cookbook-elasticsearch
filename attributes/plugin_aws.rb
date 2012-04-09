@@ -16,3 +16,13 @@ default.elasticsearch[:gateway][:s3][:bucket]        = ( aws['gateway']['s3']['b
 default.elasticsearch[:cloud][:ec2][:security_group] = ( aws['cloud']['ec2']['security_group'] rescue nil )
 default.elasticsearch[:cloud][:aws][:access_key]     = ( aws['cloud']['aws']['access_key']     rescue nil )
 default.elasticsearch[:cloud][:aws][:secret_key]     = ( aws['cloud']['aws']['secret_key']     rescue nil )
+
+# === Engine Yard ===
+# Engine Yard support.
+#
+if node.engineyard.environment.aws_secret_key and node.engineyard.environment.aws_secret_id
+  default.elasticsearch[:gateway][:type]               ||= 's3'
+  default.elasticsearch[:gateway][:s3][:bucket]        ||= "elasticsearch_#{node.engineyard.environment.name}"
+  default.elasticsearch[:cloud][:aws][:access_key]     ||= node.engineyard.environment.aws_secret_key
+  default.elasticsearch[:cloud][:aws][:secret_key]     ||= node.engineyard.environent.aws_secret_id
+end
